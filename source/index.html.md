@@ -3,237 +3,188 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+
 
 includes:
-  - errors
 
-search: true
+
+search: false
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Solvi API is organized around REST and allows for programmatic access to resources like users and projects. Bellow you will find detailed information on how to access the API and which operations are currently supported.
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> > Example request:
 
 ```shell
-# With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: Bearer <your-jwt-token>"
 ```
 
-```javascript
-const kittn = require('kittn');
+> Make sure to replace `<your-jwt-token>` with your API key.
 
-let api = kittn.authorize('meowmeowmeow');
-```
+To start using Solvi API you'll need an access token. We use [JSON Web Tokens](https://jwt.io)(JWT) as token format and expect it to be sent along with every request in Authorization header that looks like following:
 
-> Make sure to replace `meowmeowmeow` with your API key.
+`Authorization: Bearer <your-jwt-token>`
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Notice that token you receive from us is essentially only needed in order to register new users in Solvi. All user-specific requests, like creating or getting projects, should use a token generated for that specific user. That token is later also used for passwordless authentication when user is redirected from your portal to Solvi.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+API is currently open to selected partners only, please [contact us](mailto:support@solvi.nu) in order to receive a token.
 
-`Authorization: meowmeowmeow`
+# Users
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+## Register new user
 
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+> Example request:
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl -X POST
+  -H "Authorization: Bearer <your-jwt-token>"
+  -H "Content-Type: application/json"
+  -d '{ "user": { "email": "john@example.com", "password": "password", "first_name": "John", "last_name": "Doe"}}'
+  "https://solvi.nu/api/v1/users"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
+> Example response:
 
 ```json
-[
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "status": "success",
+    "user_id": 26,
+    "user_profile_url": "https://solvi.nu/edit"
   }
-]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint registers new user.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`POST https://solvi.nu/api/v1/users`
 
-### Query Parameters
+### Parameters
 
-Parameter | Default | Description
+Parameter |  | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+email | required | Email
+password | required | Password
+first_name | required | First name
+last_name | required | Last name
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<aside>
+Parameters above must be wrapped into `user` attribute and sent as JSON payload in POST request, see example.
 </aside>
 
-## Get a Specific Kitten
+## Generate user-specific token
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+> Example request:
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+curl -X POST
+  -H "Authorization: Bearer <your-jwt-token>"
+  -H "Content-Type: application/json"
+  "https://solvi.nu/api/v1/users/<user_id>/token"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+> Example response:
 
 ```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+  {
+    "status": "success",
+    "user_id": 26,
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjo0OCwiZXhwIjoxNTAxMjU2NzAyfQ.cu5zIye7ubBhv7YsFIxXkO0E_W0hG0VrlOTQx6L3b3c"
+  }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint gives a token for specific user that should be used to create and retrieve user projects. Every request will generate new token. Token is valid for 48 hours.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST https://solvi.nu/api/v1/users/<user_id>/token`
 
-### URL Parameters
+### Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter |  | Description
+--------- | ------- | -----------
+user_id | required | User ID given when user is created
 
-## Delete a Specific Kitten
+# Projects
 
-```ruby
-require 'kittn'
+## Create new project
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+> Example request:
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
+curl -X POST
+  -H "Authorization: Bearer <user-jwt-token>"
+  -H "Content-Type: application/json"
+  -d '{ "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}" }'
+  "https://solvi.nu/api/v1/projects"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
+> Example response:
 
 ```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
+  {
+    "status": "success",
+    "project_id": 142,
+    "project_url": "https://solvi.nu/projects/142/photos/upload"
+  }
 ```
 
-This endpoint retrieves a specific kitten.
+This endpoint creates a new project which is required prior to imagery upload. Projects can be connected to a field. When multiple projects are related to the same field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same field and over the time data comparison.
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`POST https://solvi.nu/api/v1/projects`
 
-### URL Parameters
+### Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+Parameter | | Description
+--------- | ----------- | -----------
+field_id | optional | Unique field identifier
+field_name | optional | Name of the the field
+field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat)
 
+
+## Get projects
+
+> Example request:
+
+```shell
+curl -X GET
+  -H "Authorization: Bearer <user-jwt-token>"
+  'https://solvi.nu/api/v1/projects?field_geom={"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}'
+```
+
+> Example response:
+
+```json
+  [
+    {
+      "project_id": 142,
+      "name": "27-JUL-2017",
+      "url": "http://localhost:3000/projects/142/photos/upload"
+    },
+    {
+      "name": "New project",
+      "url": "http://localhost:3000/projects/new"
+    }
+  ]
+```
+
+This endpoint retrieves all projects for a specific field given the boundaries of the field.
+
+### HTTP Request
+
+`GET https://solvi.nu/api/v1/projects`
+
+### Parameters
+
+Parameter | | Description
+--------- | ----------- | -----------
+field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat). If no bounadaries are specified, all projects belonging to the user identified by token are returned
