@@ -240,6 +240,9 @@
                   <li>
                     <a href="#get-projects" class="toc-h2 toc-link" data-title="Projects">Get projects</a>
                   </li>
+                  <li>
+                    <a href="#project-outputs" class="toc-h2 toc-link" data-title="Projects">Project outputs</a>
+                  </li>
               </ul>
           </li>
       </div>
@@ -249,6 +252,8 @@
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
 <p>Solvi API is organized around REST and allows for programmatic access to resources like users and projects. Bellow you will find detailed information on how to access the API and which operations are currently supported.</p>
+
+<p>In Solvi, a Project represents a single upload of multiple images. Projects can be grouped under Fields, which in turn are grouped into Farms to make it easier to organize and share data. Current API implementation allows to create and fetch projects for specific user. It is assumed that user is redirected to Solvi in order to upload, process and analyze the imagery.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <blockquote>
@@ -328,9 +333,8 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST
+<pre class="highlight shell tab-shell"><code>curl -X GET
   -H <span class="s2">"Authorization: Bearer &lt;your-jwt-token&gt;"</span>
-  -H <span class="s2">"Content-Type: application/json"</span>
   <span class="s2">"https://solvi.nu/api/v1/users/&lt;user_id&gt;/token"</span>
 </code></pre>
 <blockquote>
@@ -344,7 +348,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 </span></code></pre>
 <p>This endpoint gives a token for specific user that should be used to create and retrieve user projects. Every request will generate new token. Token is valid for 48 hours.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><code>POST https://solvi.nu/api/v1/users/&lt;user_id&gt;/token</code></p>
+<p><code>GET https://solvi.nu/api/v1/users/&lt;user_id&gt;/token</code></p>
 <h3 id='parameters-2'>Parameters</h3>
 <table><thead>
 <tr>
@@ -378,7 +382,9 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="s2">"project_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/142/photos/upload"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint creates a new project which is required prior to imagery upload. Projects can be connected to a field. When multiple projects are related to the same field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same field and over the time data comparison.</p>
+<p>This endpoint creates a new project which is required prior to imagery upload. In response you will receive url to upload page for newly created project where user can be redirected.</p>
+
+<p>Projects can be connected to a Field. When multiple projects are related to the same Field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same Field and over the time data comparison.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://solvi.nu/api/v1/projects</code></p>
 <h3 id='parameters-3'>Parameters</h3>
@@ -428,7 +434,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all projects for a specific field given the boundaries of the field.</p>
+<p>This endpoint retrieves all projects for a specific field given the boundaries of the field. If no bounadaries are specified, all projects belonging to the user identified by token are returned.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET https://solvi.nu/api/v1/projects</code></p>
 <h3 id='parameters-4'>Parameters</h3>
@@ -442,9 +448,11 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <tr>
 <td>field_geom</td>
 <td>optional</td>
-<td>Boundaries of the field as a polygon in <a href="https://geojson.org/geojson-spec.html#introduction">GeoJSON format</a> and EPSG:4326 coordinate system(lonlat). If no bounadaries are specified, all projects belonging to the user identified by token are returned</td>
+<td>Boundaries of the field as a polygon in <a href="https://geojson.org/geojson-spec.html#introduction">GeoJSON format</a> and EPSG:4326 coordinate system(lonlat).</td>
 </tr>
 </tbody></table>
+<h2 id='project-outputs'>Project outputs</h2>
+<p>There are several webhooks in Solvi that allow user generated outputs, like prescription files, to be exported or even posted back to partner API if it&#39;s available. This is handled on per case basis at the moment, <a href="mailto:support@solvi.nu">contact us</a> for more details.</p>
 
       </div>
       <div class="dark-box">
