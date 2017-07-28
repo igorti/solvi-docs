@@ -1,0 +1,457 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all_nosearch.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+        </div>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+          </li>
+          <li>
+            <a href="#users" class="toc-h1 toc-link" data-title="Users">Users</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#register-new-user" class="toc-h2 toc-link" data-title="Users">Register new user</a>
+                  </li>
+                  <li>
+                    <a href="#generate-user-specific-token" class="toc-h2 toc-link" data-title="Users">Generate user-specific token</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#projects" class="toc-h1 toc-link" data-title="Projects">Projects</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-new-project" class="toc-h2 toc-link" data-title="Projects">Create new project</a>
+                  </li>
+                  <li>
+                    <a href="#get-projects" class="toc-h2 toc-link" data-title="Projects">Get projects</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Solvi API is organized around REST and allows for programmatic access to resources like users and projects. Bellow you will find detailed information on how to access the API and which operations are currently supported.</p>
+<h1 id='authentication'>Authentication</h1>
+<blockquote>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"api_endpoint_here"</span>
+  -H <span class="s2">"Authorization: Bearer &lt;your-jwt-token&gt;"</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace <code>&lt;your-jwt-token&gt;</code> with your API key.</p>
+</blockquote>
+
+<p>To start using Solvi API you&#39;ll need an access token. We use <a href="https://jwt.io">JSON Web Tokens</a>(JWT) as token format and expect it to be sent along with every request in Authorization header that looks like following:</p>
+
+<p><code>Authorization: Bearer &lt;your-jwt-token&gt;</code></p>
+
+<p>Notice that token you receive from us is essentially only needed in order to register new users in Solvi. All user-specific requests, like creating or getting projects, should use a token generated for that specific user. That token is later also used for passwordless authentication when user is redirected from your portal to Solvi.</p>
+
+<p>API is currently open to selected partners only, please <a href="mailto:support@solvi.nu">contact us</a> in order to receive a token.</p>
+<h1 id='users'>Users</h1><h2 id='register-new-user'>Register new user</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  -H <span class="s2">"Authorization: Bearer &lt;your-jwt-token&gt;"</span>
+  -H <span class="s2">"Content-Type: application/json"</span>
+  -d <span class="s1">'{ "user": { "email": "john@example.com", "password": "password", "first_name": "John", "last_name": "Doe"}}'</span>
+  <span class="s2">"https://solvi.nu/api/v1/users"</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_profile_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/edit"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint registers new user.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://solvi.nu/api/v1/users</code></p>
+<h3 id='parameters'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>required</td>
+<td>Email</td>
+</tr>
+<tr>
+<td>password</td>
+<td>required</td>
+<td>Password</td>
+</tr>
+<tr>
+<td>first_name</td>
+<td>required</td>
+<td>First name</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>required</td>
+<td>Last name</td>
+</tr>
+</tbody></table>
+
+<aside>
+Parameters above must be wrapped into `user` attribute and sent as JSON payload in POST request, see example.
+</aside>
+<h2 id='generate-user-specific-token'>Generate user-specific token</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  -H <span class="s2">"Authorization: Bearer &lt;your-jwt-token&gt;"</span>
+  -H <span class="s2">"Content-Type: application/json"</span>
+  <span class="s2">"https://solvi.nu/api/v1/users/&lt;user_id&gt;/token"</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjo0OCwiZXhwIjoxNTAxMjU2NzAyfQ.cu5zIye7ubBhv7YsFIxXkO0E_W0hG0VrlOTQx6L3b3c"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint gives a token for specific user that should be used to create and retrieve user projects. Every request will generate new token. Token is valid for 48 hours.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://solvi.nu/api/v1/users/&lt;user_id&gt;/token</code></p>
+<h3 id='parameters-2'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user_id</td>
+<td>required</td>
+<td>User ID given when user is created</td>
+</tr>
+</tbody></table>
+<h1 id='projects'>Projects</h1><h2 id='create-new-project'>Create new project</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
+  -H <span class="s2">"Content-Type: application/json"</span>
+  -d <span class="s1">'{ "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}" }'</span>
+  <span class="s2">"https://solvi.nu/api/v1/projects"</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"project_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/142/photos/upload"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a new project which is required prior to imagery upload. Projects can be connected to a field. When multiple projects are related to the same field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same field and over the time data comparison.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://solvi.nu/api/v1/projects</code></p>
+<h3 id='parameters-3'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>field_id</td>
+<td>optional</td>
+<td>Unique field identifier</td>
+</tr>
+<tr>
+<td>field_name</td>
+<td>optional</td>
+<td>Name of the the field</td>
+</tr>
+<tr>
+<td>field_geom</td>
+<td>optional</td>
+<td>Boundaries of the field as a polygon in <a href="https://geojson.org/geojson-spec.html#introduction">GeoJSON format</a> and EPSG:4326 coordinate system(lonlat)</td>
+</tr>
+</tbody></table>
+<h2 id='get-projects'>Get projects</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X GET
+  -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
+  <span class="s1">'https://solvi.nu/api/v1/projects?field_geom={"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}'</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27-JUL-2017"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/projects/142/photos/upload"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New project"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/projects/new"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all projects for a specific field given the boundaries of the field.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://solvi.nu/api/v1/projects</code></p>
+<h3 id='parameters-4'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>field_geom</td>
+<td>optional</td>
+<td>Boundaries of the field as a polygon in <a href="https://geojson.org/geojson-spec.html#introduction">GeoJSON format</a> and EPSG:4326 coordinate system(lonlat). If no bounadaries are specified, all projects belonging to the user identified by token are returned</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
