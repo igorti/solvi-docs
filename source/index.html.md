@@ -17,6 +17,8 @@ search: false
 
 Solvi API is organized around REST and allows for programmatic access to resources like users and projects. Bellow you will find detailed information on how to access the API and which operations are currently supported.
 
+In Solvi, a Project represents a single upload of multiple images. Projects can be grouped under Fields, which in turn are grouped into Farms to make it easier to organize and share data. Current API implementation allows to create and fetch projects for specific user. It is assumed that user is redirected to Solvi in order to upload, process and analyze the imagery.
+
 # Authentication
 
 > > Example request:
@@ -84,9 +86,8 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 > Example request:
 
 ```shell
-curl -X POST
+curl -X GET
   -H "Authorization: Bearer <your-jwt-token>"
-  -H "Content-Type: application/json"
   "https://solvi.nu/api/v1/users/<user_id>/token"
 ```
 
@@ -104,7 +105,7 @@ This endpoint gives a token for specific user that should be used to create and 
 
 ### HTTP Request
 
-`POST https://solvi.nu/api/v1/users/<user_id>/token`
+`GET https://solvi.nu/api/v1/users/<user_id>/token`
 
 ### Parameters
 
@@ -136,7 +137,9 @@ curl -X POST
   }
 ```
 
-This endpoint creates a new project which is required prior to imagery upload. Projects can be connected to a field. When multiple projects are related to the same field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same field and over the time data comparison.
+This endpoint creates a new project which is required prior to imagery upload. In response you will receive url to upload page for newly created project where user can be redirected.
+
+Projects can be connected to a Field. When multiple projects are related to the same Field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same Field and over the time data comparison.
 
 ### HTTP Request
 
@@ -177,7 +180,7 @@ curl -X GET
   ]
 ```
 
-This endpoint retrieves all projects for a specific field given the boundaries of the field.
+This endpoint retrieves all projects for a specific field given the boundaries of the field. If no bounadaries are specified, all projects belonging to the user identified by token are returned.
 
 ### HTTP Request
 
@@ -187,4 +190,8 @@ This endpoint retrieves all projects for a specific field given the boundaries o
 
 Parameter | | Description
 --------- | ----------- | -----------
-field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat). If no bounadaries are specified, all projects belonging to the user identified by token are returned
+field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat).
+
+## Project outputs
+
+There are several webhooks in Solvi that allow user generated outputs, like prescription files, to be exported or even posted back to partner API if it's available. This is handled on per case basis at the moment, [contact us](mailto:support@solvi.nu) for more details.
