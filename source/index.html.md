@@ -171,11 +171,11 @@ curl -X GET
     {
       "project_id": 142,
       "name": "27-JUL-2017",
-      "url": "http://localhost:3000/projects/142/photos/upload"
+      "url": "https://solvi.nu/projects/142/photos/upload"
     },
     {
       "name": "New project",
-      "url": "http://localhost:3000/projects/new"
+      "url": "https://solvi.nu/projects/new"
     }
   ]
 ```
