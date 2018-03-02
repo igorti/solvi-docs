@@ -100,7 +100,7 @@ curl -X GET
   }
 ```
 
-This endpoint gives a token for specific user that should be used to create and retrieve user projects. Every request will generate new token. Token is valid for 48 hours.
+This endpoint gives a token for specific user that should be used to create and retrieve user projects. Every request will generate new token. Token is valid for 24 hours.
 
 ### HTTP Request
 
