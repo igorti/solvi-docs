@@ -57,12 +57,11 @@ curl -X POST
 ```json
   {
     "status": "success",
-    "user_id": 26,
-    "user_profile_url": "https://solvi.nu/edit"
+    "user_id": 182
   }
 ```
 
-This endpoint registers new user.
+This endpoint registers new user. If successful, the response will return `user_id` that you would later to generate user-specific tokens
 
 ### HTTP Request
 
@@ -113,9 +112,9 @@ Parameter |  | Description
 --------- | ------- | -----------
 user_id | required | User ID given when user is created
 
-# Projects
+# Fields
 
-## Create new project
+## Create field
 
 > Example request:
 
@@ -123,7 +122,85 @@ user_id | required | User ID given when user is created
 curl -X POST
   -H "Authorization: Bearer <user-jwt-token>"
   -H "Content-Type: application/json"
-  -d '{ "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}" }'
+  -d '{"field": { "name": "Winter Wheat", "geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}"}}'
+  "https://solvi.nu/api/v1/fields"
+```
+
+> Example response:
+
+```json
+  {
+    "status": "success",
+    "field_id": 793
+  }
+```
+
+Creates new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The response contains `field_id` which can be later used to relate projects to specific field.
+
+### HTTP Request
+
+`POST https://solvi.nu/api/v1/fields`
+
+### Parameters
+
+Parameter | | Description
+--------- | ----------- | -----------
+name | | Name of the the field
+geom | optional | Boundaries of the field as a Polygon or Multipolygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat)
+
+
+## Get fields
+
+> Example request:
+
+```shell
+curl -X GET
+  -H "Authorization: Bearer <user-jwt-token>"
+  -H "Content-Type: application/json"
+  "https://solvi.nu/api/v1/fields"
+```
+
+> Example response:
+
+```json
+    [
+      {
+          "name": "wheat field",
+          "created_at": "2018-02-27T12:45:05.550Z",
+          "projects": [
+              {
+                  "project_id": 1291,
+                  "status": "processed",
+                  "name": "27-FEB-2018",
+                  "field_name": "Wheat field",
+                  "survey_date": "2018-02-26T14:19:36.000Z",
+                  "upload_date": "2018-02-27T12:45:05.556Z",
+                  "url": "https://solvi.nu/projects/1291",
+                  "thumbnail_url": "https://solvi.nu/projects/1291/thumbnail.png"
+              }
+          ]
+      }
+    ]
+```
+
+Gets all user fields and a list of projects related to each field.
+
+### HTTP Request
+
+`GET https://solvi.nu/api/v1/fields`
+
+
+# Projects
+
+## Create project
+
+> Example request:
+
+```shell
+curl -X POST
+  -H "Authorization: Bearer <user-jwt-token>"
+  -H "Content-Type: application/json"
+  -d '{ "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}" }'
   "https://solvi.nu/api/v1/projects"
 ```
 
@@ -141,6 +218,8 @@ This endpoint creates a new project which is required prior to imagery upload. I
 
 Projects can be connected to a Field. When multiple projects are related to the same Field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same Field and over the time data comparison.
 
+Fields can be created either beforehand - then `field_id` parameter should be specified when creating a project, or on the fly by sending in `field_name` and `field_geom`.
+
 ### HTTP Request
 
 `POST https://solvi.nu/api/v1/projects`
@@ -149,7 +228,7 @@ Projects can be connected to a Field. When multiple projects are related to the 
 
 Parameter | | Description
 --------- | ----------- | -----------
-field_id | optional | Unique field identifier
+field_id | | Unique field identifier
 field_name | optional | Name of the the field
 field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat)
 
