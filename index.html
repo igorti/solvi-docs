@@ -232,10 +232,21 @@
               </ul>
           </li>
           <li>
+            <a href="#fields" class="toc-h1 toc-link" data-title="Fields">Fields</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-field" class="toc-h2 toc-link" data-title="Fields">Create field</a>
+                  </li>
+                  <li>
+                    <a href="#get-fields" class="toc-h2 toc-link" data-title="Fields">Get fields</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#projects" class="toc-h1 toc-link" data-title="Projects">Projects</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#create-new-project" class="toc-h2 toc-link" data-title="Projects">Create new project</a>
+                    <a href="#create-project" class="toc-h2 toc-link" data-title="Projects">Create project</a>
                   </li>
                   <li>
                     <a href="#get-projects" class="toc-h2 toc-link" data-title="Projects">Get projects</a>
@@ -289,11 +300,10 @@
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"user_profile_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/edit"</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">182</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint registers new user.</p>
+<p>This endpoint registers new user. If successful, the response will return <code>user_id</code> that you would later to generate user-specific tokens</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://solvi.nu/api/v1/users</code></p>
 <h3 id='parameters'>Parameters</h3>
@@ -363,14 +373,88 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <td>User ID given when user is created</td>
 </tr>
 </tbody></table>
-<h1 id='projects'>Projects</h1><h2 id='create-new-project'>Create new project</h2>
+<h1 id='fields'>Fields</h1><h2 id='create-field'>Create field</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl -X POST
   -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
   -H <span class="s2">"Content-Type: application/json"</span>
-  -d <span class="s1">'{ "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}" }'</span>
+  -d <span class="s1">'{"field": { "name": "Winter Wheat", "geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}"}}'</span>
+  <span class="s2">"https://solvi.nu/api/v1/fields"</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"field_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">793</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Creates new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The response contains <code>field_id</code> which can be later used to relate projects to specific field.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://solvi.nu/api/v1/fields</code></p>
+<h3 id='parameters-3'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td></td>
+<td>Name of the the field</td>
+</tr>
+<tr>
+<td>geom</td>
+<td>optional</td>
+<td>Boundaries of the field as a Polygon or Multipolygon in <a href="https://geojson.org/geojson-spec.html#introduction">GeoJSON format</a> and EPSG:4326 coordinate system(lonlat)</td>
+</tr>
+</tbody></table>
+<h2 id='get-fields'>Get fields</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X GET
+  -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
+  -H <span class="s2">"Content-Type: application/json"</span>
+  <span class="s2">"https://solvi.nu/api/v1/fields"</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">    </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wheat field"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-02-27T12:45:05.550Z"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"projects"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                  </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1291</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processed"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27-FEB-2018"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"field_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wheat field"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"survey_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-02-26T14:19:36.000Z"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"upload_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-02-27T12:45:05.556Z"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/1291"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/1291/thumbnail.png"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Gets all user fields and a list of projects related to each field.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://solvi.nu/api/v1/fields</code></p>
+<h1 id='projects'>Projects</h1><h2 id='create-project'>Create project</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
+  -H <span class="s2">"Content-Type: application/json"</span>
+  -d <span class="s1">'{ "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}" }'</span>
   <span class="s2">"https://solvi.nu/api/v1/projects"</span>
 </code></pre>
 <blockquote>
@@ -385,9 +469,11 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <p>This endpoint creates a new project which is required prior to imagery upload. In response you will receive url to upload page for newly created project where user can be redirected.</p>
 
 <p>Projects can be connected to a Field. When multiple projects are related to the same Field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same Field and over the time data comparison.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
+
+<p>Fields can be created either beforehand - then <code>field_id</code> parameter should be specified when creating a project, or on the fly by sending in <code>field_name</code> and <code>field_geom</code>.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://solvi.nu/api/v1/projects</code></p>
-<h3 id='parameters-3'>Parameters</h3>
+<h3 id='parameters-4'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -397,7 +483,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 </thead><tbody>
 <tr>
 <td>field_id</td>
-<td>optional</td>
+<td></td>
 <td>Unique field identifier</td>
 </tr>
 <tr>
@@ -426,18 +512,18 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27-JUL-2017"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/projects/142/photos/upload"</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/142/photos/upload"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New project"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/projects/new"</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/new"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all projects for a specific field given the boundaries of the field. If no bounadaries are specified, all projects belonging to the user identified by token are returned.</p>
-<h3 id='http-request-4'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>GET https://solvi.nu/api/v1/projects</code></p>
-<h3 id='parameters-4'>Parameters</h3>
+<h3 id='parameters-5'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
