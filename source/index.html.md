@@ -248,9 +248,22 @@ curl -X GET
 ```json
   [
     {
-      "project_id": 142,
-      "name": "27-JUL-2017",
-      "url": "https://solvi.nu/projects/142/photos/upload"
+        "project_id": 9999,
+        "status": "processed",
+        "name": "25-JUN-2018",
+        "field": {
+            "id": 9999,
+            "name": "Winter Wheat",
+            "identfier": "WW-01",
+            "farm": {
+                "id": 656,
+                "name": "Borgeby Farm"
+            }
+        },
+        "survey_date": "2018-06-25T19:19:27.000Z",
+        "upload_date": "2018-06-25T20:50:14.870Z",
+        "url": "https://solvi.nu/projects/9999",
+        "thumbnail_url": "http://solvi.nu/projects/9999/thumbnail.png"
     },
     {
       "name": "New project",
@@ -259,7 +272,7 @@ curl -X GET
   ]
 ```
 
-This endpoint retrieves all projects for a specific field given the boundaries of the field. If no bounadaries are specified, all projects belonging to the user identified by token are returned.
+This endpoint retrieves all projects created by the user or shared with user by others. If field boundaries are provided, only projects whose extent overlaps boundaries are returned.
 
 ### HTTP Request
 
