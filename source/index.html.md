@@ -216,7 +216,7 @@ Gets all user fields and a list of projects related to each field.
 curl -X POST
   -H "Authorization: Bearer <user-jwt-token>"
   -H "Content-Type: application/json"
-  -d '{ "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}" }'
+  -d '{ "type": "overlapping", "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}" }'
   "https://solvi.nu/api/v1/projects"
 ```
 
@@ -244,6 +244,7 @@ Fields can be created either beforehand - then `field_id` parameter should be sp
 
 Parameter | | Description
 --------- | ----------- | -----------
+type      | optional  | The type of imagery for this project: `overlapping` or `stitched`; default is `overlapping`
 field_id | | Unique field identifier
 field_name | optional | Name of the the field
 field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat)
