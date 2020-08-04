@@ -15,28 +15,44 @@ search: false
 
 # Introduction
 
-Solvi API is organized around REST and allows for programmatic access to resources like users and projects. Bellow you will find detailed information on how to access the API and which operations are currently supported.
+Solvi API is organized around REST and allows for programmatic access to resources like users and projects. Below you will find detailed information on how to access the API and which operations are currently supported.
 
 In Solvi, a Project represents a single upload of multiple images. Projects can be grouped under Fields, which in turn are grouped into Farms to make it easier to organize and share data. Current API implementation allows to create and fetch projects for specific user. It is assumed that user is redirected to Solvi in order to upload, process and analyze the imagery.
 
 # Authentication
 
-> > Example request:
+> Example API key request:
 
 ```shell
 curl "api_endpoint_here"
-  -H "Authorization: Bearer <your-jwt-token>"
+  -H "X-Api-Key: <your-api-key>"
 ```
+> Make sure to replace `<your-api-key>` with your API key.
 
-> Make sure to replace `<your-jwt-token>` with your API key.
+To use Solvi API you first need an *API key*. You will get an API key from Solvi, [contact us](mailto:support@solvi.nu) to get your key. If you for some
+reason need to revoke a key, you can also contact us.
 
-To start using Solvi API you'll need an access token. We use [JSON Web Tokens](https://jwt.io)(JWT) as token format and expect it to be sent along with every request in Authorization header that looks like following:
+Please note that the API key should be kept secret and not be exposed to end users: for example, never send the API key to a web browser.
 
-`Authorization: Bearer <your-jwt-token>`
+With the API key, you can access general API methods, for example to [register new users](#register-new-user) in Solvi, and create user specific tokens.
 
-Notice that token you receive from us is essentially only needed in order to register new users in Solvi. All user-specific requests, like creating or getting projects, should use a token generated for that specific user. That token is later also used for passwordless authentication when user is redirected from your portal to Solvi.
+Requests requiring an API key should add the `X-Api-Key` header:
 
-API is currently open to selected partners only, please [contact us](mailto:support@solvi.nu) in order to receive a token.
+`X-Api-Key: <your-api-key>`
+
+> Example user specific request:
+
+```shell
+curl "api_endpoint_here"
+  -H "Authorization: Bearer <user-specific-token>"
+```
+> Make sure to replace `<user-specific-token>` with your token.
+
+All user-specific requests, like creating or getting projects, should use a user specific token, which has a limited lifetime and can therefor be used directly from a browser, or for passwordless authentication when user is redirected from your portal to Solvi. A user specific token can be used for a limited amount of time (currently 24 hours) before it expires. A user specific token is created by using the [endpoint to create user-specific token](#generate-user-specific-token).
+
+User specific requests should use the `Authorization` header *instead of* the `X-Api-Key` header:
+
+`Authorization: Bearer <user-specific-token>`
 
 # Users
 
@@ -46,7 +62,7 @@ API is currently open to selected partners only, please [contact us](mailto:supp
 
 ```shell
 curl -X POST
-  -H "Authorization: Bearer <your-jwt-token>"
+  -H "X-Api-Key: <your-api-key>"
   -H "Content-Type: application/json"
   -d '{ "user": { "email": "john@example.com", "password": "password", "first_name": "John", "last_name": "Doe"}}'
   "https://solvi.nu/api/v1/users"
@@ -61,7 +77,7 @@ curl -X POST
   }
 ```
 
-This endpoint registers new user. If successful, the response will return `user_id` that you would later to generate user-specific tokens
+This endpoint registers new user. If successful, the response will return `user_id` that you would use later to generate user-specific tokens
 
 ### HTTP Request
 
@@ -86,7 +102,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 
 ```shell
 curl -X GET
-  -H "Authorization: Bearer <your-jwt-token>"
+  -H "X-Api-Key: <your-api-key>"
   "https://solvi.nu/api/v1/users/<user_id>/token"
 ```
 
