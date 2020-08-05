@@ -226,7 +226,14 @@ curl -X POST
   {
     "status": "success",
     "project_id": 142,
-    "project_url": "https://solvi.nu/projects/142/photos/upload"
+    "project_url": "https://solvi.nu/projects/142/photos/upload",
+    "imagery_upload_data": {
+      "url":"https://solvi-projects-dev.s3.eu-west-1.amazonaws.com",
+      "fields": {
+        [...]
+      },
+      "key_prefix":"uploads/26c1ce11-c9bf-4825-821c-72e9f600a6cf/originals/"
+    }
   }
 ```
 
@@ -235,6 +242,8 @@ This endpoint creates a new project which is required prior to imagery upload. I
 Projects can be connected to a Field. When multiple projects are related to the same Field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same Field and over the time data comparison.
 
 Fields can be created either beforehand - then `field_id` parameter should be specified when creating a project, or on the fly by sending in `field_name` and `field_geom`.
+
+After a project has been created, imagery can be uploaded to it using the information in the response's `imagery_upload_data`. See next section for details.
 
 ### HTTP Request
 
@@ -249,6 +258,44 @@ field_id | | Unique field identifier
 field_name | optional | Name of the the field
 field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat)
 
+## Upload project imagery
+
+> Example `upload_imagery_data` contents:
+
+```json
+{
+  "url": "https://solvi-projects.s3.eu-west-1.amazonaws.com",
+  "fields": {
+    "x-amz-storage-class": "STANDARD_IA",
+    "policy": "eyJleHBpcmF0aW9uIjoiMjAyMC0wOC0wN1QwNzozMjo1MVoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJzb2x2aS1wcm9qZWN0cy1kZXYifSxbInN0YXJ0cy13aXRoIiwiJGtleSIsInVwbG9hZHMvMjZjMWNlMTEtYzliZi00ODI1LTgyMWMtNzJlOWY2MDBhNmNmL29yaWdpbmFscy8iXSxbInN0YXJ0cy13aXRoIiwiJENvbnRlbnQtVHlwZSIsIiJdLHsieC1hbXotc3RvcmFnZS1jbGFzcyI6IlNUQU5EQVJEX0lBIn0seyJ4LWFtei1jcmVkZW50aWFsIjoiQUtJQVVWTUhLR1RRRldMTlkyTUgvMjAyMDA4MDUvZXUtd2VzdC0xL3MzL2F3czRfcmVxdWVzdCJ9LHsieC1hbXotYWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LHsieC1hbXotZGF0ZSI6IjIwMjAwODA1VDA3MzI1MVoifV18",
+    "x-amz-credential": "AKIAUVMHKGTQFWLNY2MX/20200805/eu-west-1/s3/aws4_request",
+    "x-amz-algorithm": "AWS4-HMAC-SHA256",
+    "x-amz-date": "20200805T073251Z",
+    "x-amz-signature": "5494b8f7ca5c78c45daf7d8099f3c4b93e141567d3691dbec3dcc0f6fd2e0181"
+  },
+  "key_prefix": "uploads/26c1ce11-c9bf-4825-821c-72e9f600a6cf/originals/"
+}
+```
+
+When creating a project, the response includes information required to upload
+imagery for the project. This data describes the necessary parameters to upload
+images using HTTP POST requests.
+
+> Example JavaScript function to POST an image using `upload_imagery_data`:
+
+```js
+  function uploadFile (upload_imagery_data, f) {
+    const form = new FormData()
+    Object.keys(upload_imagery_data.fields).forEach(field => form.append(field, upload_imagery_data.fields[field]))
+    form.append('key', upload_imagery_data.key_prefix + f.name)
+    form.append('Content-Type', f.type)
+    form.append('file', f)
+
+    return fetch(postInfo.url, { method: 'POST', body: form })
+  }
+```
+
+The required parameters are included in the `upload_imagery_data` object: this object has a `url` property indicating the URL to POST imagery to, and a `fields` object, listing the HTTP form data fields required for the POST request. In addition to these fields, the form must also include a `key` field: the key is the must include a value prefixed by the `key_prefix` and a value unique for each image (like its filename).
 
 ## Get projects
 
