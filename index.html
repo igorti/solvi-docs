@@ -252,6 +252,9 @@
                     <a href="#upload-project-imagery" class="toc-h2 toc-link" data-title="Projects">Upload project imagery</a>
                   </li>
                   <li>
+                    <a href="#processing-uploaded-imagery" class="toc-h2 toc-link" data-title="Projects">Processing uploaded imagery</a>
+                  </li>
+                  <li>
                     <a href="#get-projects" class="toc-h2 toc-link" data-title="Projects">Get projects</a>
                   </li>
                   <li>
@@ -592,7 +595,52 @@ imagery for the project.</p>
 <h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/projects/&lt;project_id&gt;/begin_upload</code></p>
 <h3 id='parameters-5'>Parameters</h3>
-<p>None.</p>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>project_id</td>
+<td>required</td>
+<td>Project ID given when project is created</td>
+</tr>
+</tbody></table>
+<h2 id='processing-uploaded-imagery'>Processing uploaded imagery</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
+  -H <span class="s2">"Content-Type: application/json"</span>
+  <span class="s2">"https://solvi.ag/api/v1/projects/&lt;project_id&gt;/complete_upload"</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>When project imagery has been uploaded, the upload must be completed, which will start processing of the imagery.</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>POST https://solvi.ag/api/v1/projects/&lt;project_id&gt;/complete_upload</code></p>
+<h3 id='parameters-6'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>project_id</td>
+<td>required</td>
+<td>Project ID given when project is created</td>
+</tr>
+</tbody></table>
 <h2 id='get-projects'>Get projects</h2>
 <blockquote>
 <p>Example request:</p>
@@ -630,9 +678,9 @@ imagery for the project.</p>
   </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all projects created by the user or shared with user by others. If field boundaries are provided, only projects whose extent overlaps boundaries are returned.</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/projects/&lt;project_id&gt;</code></p>
-<h3 id='parameters-6'>Parameters</h3>
+<h3 id='parameters-7'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -690,9 +738,9 @@ imagery for the project.</p>
 <p>The included <code>resources</code> are URLs that can be used to fetch the projects outputs. These resource URLs are temporary, with a lifetime of 15 minutes before they expire.</p>
 
 <p>The response also include URL templates for tiled maps in the <code>tiles</code> section: these URLs can be used directly with several popular map clients like <a href="https://openlayers.org/">OpenLayers</a> or <a href="https://leafletjs.com/">Leaflet</a>. The URLs are temporary, with a lifetime of at least 48 hours.</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/projects/&lt;project_id&gt;</code></p>
-<h3 id='parameters-7'>Parameters</h3>
+<h3 id='parameters-8'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
