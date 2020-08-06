@@ -316,7 +316,7 @@ reason need to revoke a key, you can also contact us.</p>
   -H <span class="s2">"X-Api-Key: &lt;your-api-key&gt;"</span>
   -H <span class="s2">"Content-Type: application/json"</span>
   -d <span class="s1">'{ "user": { "email": "john@example.com", "password": "password", "first_name": "John", "last_name": "Doe"}}'</span>
-  <span class="s2">"https://solvi.nu/api/v1/users"</span>
+  <span class="s2">"https://solvi.ag/api/v1/users"</span>
 </code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -328,7 +328,7 @@ reason need to revoke a key, you can also contact us.</p>
 </span></code></pre>
 <p>This endpoint registers new user. If successful, the response will return <code>user_id</code> that you would use later to generate user-specific tokens</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://solvi.nu/api/v1/users</code></p>
+<p><code>POST https://solvi.ag/api/v1/users</code></p>
 <h3 id='parameters'>Parameters</h3>
 <table><thead>
 <tr>
@@ -368,7 +368,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl -X GET
   -H <span class="s2">"X-Api-Key: &lt;your-api-key&gt;"</span>
-  <span class="s2">"https://solvi.nu/api/v1/users/&lt;user_id&gt;/token"</span>
+  <span class="s2">"https://solvi.ag/api/v1/users/&lt;user_id&gt;/token"</span>
 </code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -381,7 +381,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 </span></code></pre>
 <p>This endpoint gives a token for specific user that should be used to create and retrieve user projects. Every request will generate new token. Token is valid for 24 hours.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET https://solvi.nu/api/v1/users/&lt;user_id&gt;/token</code></p>
+<p><code>GET https://solvi.ag/api/v1/users/&lt;user_id&gt;/token</code></p>
 <h3 id='parameters-2'>Parameters</h3>
 <table><thead>
 <tr>
@@ -404,7 +404,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
   -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
   -H <span class="s2">"Content-Type: application/json"</span>
   -d <span class="s1">'{"field": { "name": "Winter Wheat", "geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}"}}'</span>
-  <span class="s2">"https://solvi.nu/api/v1/fields"</span>
+  <span class="s2">"https://solvi.ag/api/v1/fields"</span>
 </code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -416,7 +416,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 </span></code></pre>
 <p>Creates new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The response contains <code>field_id</code> which can be later used to relate projects to specific field.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
-<p><code>POST https://solvi.nu/api/v1/fields</code></p>
+<p><code>POST https://solvi.ag/api/v1/fields</code></p>
 <h3 id='parameters-3'>Parameters</h3>
 <table><thead>
 <tr>
@@ -443,7 +443,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <pre class="highlight shell tab-shell"><code>curl -X GET
   -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
   -H <span class="s2">"Content-Type: application/json"</span>
-  <span class="s2">"https://solvi.nu/api/v1/fields"</span>
+  <span class="s2">"https://solvi.ag/api/v1/fields"</span>
 </code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -460,8 +460,8 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
                   </span><span class="s2">"field_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wheat field"</span><span class="p">,</span><span class="w">
                   </span><span class="s2">"survey_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-02-26T14:19:36.000Z"</span><span class="p">,</span><span class="w">
                   </span><span class="s2">"upload_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-02-27T12:45:05.556Z"</span><span class="p">,</span><span class="w">
-                  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/1291"</span><span class="p">,</span><span class="w">
-                  </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/1291/thumbnail.png"</span><span class="w">
+                  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/1291"</span><span class="p">,</span><span class="w">
+                  </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/1291/thumbnail.png"</span><span class="w">
               </span><span class="p">}</span><span class="w">
           </span><span class="p">]</span><span class="w">
       </span><span class="p">}</span><span class="w">
@@ -469,7 +469,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 </span></code></pre>
 <p>Gets all user fields and a list of projects related to each field.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
-<p><code>GET https://solvi.nu/api/v1/fields</code></p>
+<p><code>GET https://solvi.ag/api/v1/fields</code></p>
 <h1 id='projects'>Projects</h1><h2 id='create-project'>Create project</h2>
 <blockquote>
 <p>Example request:</p>
@@ -478,7 +478,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
   -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
   -H <span class="s2">"Content-Type: application/json"</span>
   -d <span class="s1">'{ "type": "overlapping", "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}" }'</span>
-  <span class="s2">"https://solvi.nu/api/v1/projects"</span>
+  <span class="s2">"https://solvi.ag/api/v1/projects"</span>
 </code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -486,7 +486,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">142</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"project_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/142/photos/upload"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"project_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/142/photos/upload"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"imagery_upload_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"url"</span><span class="p">:</span><span class="s2">"https://solvi-projects-dev.s3.eu-west-1.amazonaws.com"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -504,7 +504,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 
 <p>Optionally, a project can be created with a so called <em>webhook</em> that will be called every time the status of the project changes. This makes it possible for an integration to for example react when a project finishes processing, without having to use polling to check the project&#39;s status. To add a webhook, specify the URL to be called with the <code>status_webhook</code> parameter. See the section on <a href="#webhooks">webhooks</a> for details.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
-<p><code>POST https://solvi.nu/api/v1/projects</code></p>
+<p><code>POST https://solvi.ag/api/v1/projects</code></p>
 <h3 id='parameters-4'>Parameters</h3>
 <table><thead>
 <tr>
@@ -551,7 +551,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <pre class="highlight shell tab-shell"><code>curl -X POST
   -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
   -H <span class="s2">"Content-Type: application/json"</span>
-  <span class="s2">"https://solvi.nu/api/v1/projects/&lt;project_id&gt;/begin_upload"</span>
+  <span class="s2">"https://solvi.ag/api/v1/projects/&lt;project_id&gt;/begin_upload"</span>
 </code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -590,7 +590,7 @@ imagery for the project.</p>
 </code></pre>
 <p>The required parameters are included in the <code>upload_imagery_data</code> object: this object has a <code>url</code> property indicating the URL to POST imagery to, and a <code>fields</code> object, listing the HTTP form data fields required for the POST request. In addition to these fields, the form must also include a <code>key</code> field: the key is the must include a value prefixed by the <code>key_prefix</code> and a value unique for each image (like its filename).</p>
 <h3 id='http-request-6'>HTTP Request</h3>
-<p><code>POST https://solvi.nu/api/v1/projects/&lt;project_id&gt;/begin_upload</code></p>
+<p><code>POST https://solvi.ag/api/v1/projects/&lt;project_id&gt;/begin_upload</code></p>
 <h3 id='parameters-5'>Parameters</h3>
 <p>None.</p>
 <h2 id='get-projects'>Get projects</h2>
@@ -599,7 +599,7 @@ imagery for the project.</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl -X GET
   -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
-  <span class="s1">'https://solvi.nu/api/v1/projects?field_geom={"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}'</span>
+  <span class="s1">'https://solvi.ag/api/v1/projects?field_geom={"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}'</span>
 </code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -620,18 +620,18 @@ imagery for the project.</p>
         </span><span class="p">},</span><span class="w">
         </span><span class="s2">"survey_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T19:19:27.000Z"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"upload_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T20:50:14.870Z"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999/thumbnail.png"</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/9999"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/9999/thumbnail.png"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New project"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/new"</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/new"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all projects created by the user or shared with user by others. If field boundaries are provided, only projects whose extent overlaps boundaries are returned.</p>
 <h3 id='http-request-7'>HTTP Request</h3>
-<p><code>GET https://solvi.nu/api/v1/projects/&lt;project_id&gt;</code></p>
+<p><code>GET https://solvi.ag/api/v1/projects/&lt;project_id&gt;</code></p>
 <h3 id='parameters-6'>Parameters</h3>
 <table><thead>
 <tr>
@@ -652,7 +652,7 @@ imagery for the project.</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl -X GET
   -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
-  <span class="s1">'https://solvi.nu/api/v1/projects/&lt;project-id&gt;
+  <span class="s1">'https://solvi.ag/api/v1/projects/&lt;project-id&gt;
 </span></code></pre>
 <blockquote>
 <p>Example response:</p>
@@ -672,10 +672,10 @@ imagery for the project.</p>
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"survey_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T19:19:27.000Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"upload_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T20:50:14.870Z"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999/thumbnail.png"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/9999"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.ag/projects/9999/thumbnail.png"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"thumbnail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://solvi.nu/projects/9999/thumbnail.png"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"thumbnail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999/thumbnail.png"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"ortho"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi-projects.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/ortho.tiff?..."</span><span class="p">,</span><span class="w">
         </span><span class="s2">"dem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi-projects-dev.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/dem.tiff?..."</span><span class="w">
       </span><span class="p">},</span><span class="w">
@@ -691,7 +691,7 @@ imagery for the project.</p>
 
 <p>The response also include URL templates for tiled maps in the <code>tiles</code> section: these URLs can be used directly with several popular map clients like <a href="https://openlayers.org/">OpenLayers</a> or <a href="https://leafletjs.com/">Leaflet</a>. The URLs are temporary, with a lifetime of at least 48 hours.</p>
 <h3 id='http-request-8'>HTTP Request</h3>
-<p><code>GET https://solvi.nu/api/v1/projects/&lt;project_id&gt;</code></p>
+<p><code>GET https://solvi.ag/api/v1/projects/&lt;project_id&gt;</code></p>
 <h3 id='parameters-7'>Parameters</h3>
 <table><thead>
 <tr>
