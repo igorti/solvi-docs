@@ -65,7 +65,7 @@ curl -X POST
   -H "X-Api-Key: <your-api-key>"
   -H "Content-Type: application/json"
   -d '{ "user": { "email": "john@example.com", "password": "password", "first_name": "John", "last_name": "Doe"}}'
-  "https://solvi.nu/api/v1/users"
+  "https://solvi.ag/api/v1/users"
 ```
 
 > Example response:
@@ -81,7 +81,7 @@ This endpoint registers new user. If successful, the response will return `user_
 
 ### HTTP Request
 
-`POST https://solvi.nu/api/v1/users`
+`POST https://solvi.ag/api/v1/users`
 
 ### Parameters
 
@@ -103,7 +103,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 ```shell
 curl -X GET
   -H "X-Api-Key: <your-api-key>"
-  "https://solvi.nu/api/v1/users/<user_id>/token"
+  "https://solvi.ag/api/v1/users/<user_id>/token"
 ```
 
 > Example response:
@@ -120,7 +120,7 @@ This endpoint gives a token for specific user that should be used to create and 
 
 ### HTTP Request
 
-`GET https://solvi.nu/api/v1/users/<user_id>/token`
+`GET https://solvi.ag/api/v1/users/<user_id>/token`
 
 ### Parameters
 
@@ -139,7 +139,7 @@ curl -X POST
   -H "Authorization: Bearer <user-jwt-token>"
   -H "Content-Type: application/json"
   -d '{"field": { "name": "Winter Wheat", "geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}"}}'
-  "https://solvi.nu/api/v1/fields"
+  "https://solvi.ag/api/v1/fields"
 ```
 
 > Example response:
@@ -155,7 +155,7 @@ Creates new field. Field boundaries can be provided as Polygon or MultiPolygon i
 
 ### HTTP Request
 
-`POST https://solvi.nu/api/v1/fields`
+`POST https://solvi.ag/api/v1/fields`
 
 ### Parameters
 
@@ -173,7 +173,7 @@ geom | optional | Boundaries of the field as a Polygon or Multipolygon in [GeoJS
 curl -X GET
   -H "Authorization: Bearer <user-jwt-token>"
   -H "Content-Type: application/json"
-  "https://solvi.nu/api/v1/fields"
+  "https://solvi.ag/api/v1/fields"
 ```
 
 > Example response:
@@ -191,8 +191,8 @@ curl -X GET
                   "field_name": "Wheat field",
                   "survey_date": "2018-02-26T14:19:36.000Z",
                   "upload_date": "2018-02-27T12:45:05.556Z",
-                  "url": "https://solvi.nu/projects/1291",
-                  "thumbnail_url": "https://solvi.nu/projects/1291/thumbnail.png"
+                  "url": "https://solvi.ag/projects/1291",
+                  "thumbnail_url": "https://solvi.ag/projects/1291/thumbnail.png"
               }
           ]
       }
@@ -203,7 +203,7 @@ Gets all user fields and a list of projects related to each field.
 
 ### HTTP Request
 
-`GET https://solvi.nu/api/v1/fields`
+`GET https://solvi.ag/api/v1/fields`
 
 
 # Projects
@@ -217,7 +217,7 @@ curl -X POST
   -H "Authorization: Bearer <user-jwt-token>"
   -H "Content-Type: application/json"
   -d '{ "type": "overlapping", "field_id": "field_1", "field_name": "Wheat Field", "field_geom": "{\"type\":\"Polygon\",\"coordinates\":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}" }'
-  "https://solvi.nu/api/v1/projects"
+  "https://solvi.ag/api/v1/projects"
 ```
 
 > Example response:
@@ -226,7 +226,7 @@ curl -X POST
   {
     "status": "success",
     "project_id": 142,
-    "project_url": "https://solvi.nu/projects/142/photos/upload",
+    "project_url": "https://solvi.ag/projects/142/photos/upload",
     "imagery_upload_data": {
       "url":"https://solvi-projects-dev.s3.eu-west-1.amazonaws.com",
       "fields": {
@@ -247,7 +247,7 @@ Optionally, a project can be created with a so called *webhook* that will be cal
 
 ### HTTP Request
 
-`POST https://solvi.nu/api/v1/projects`
+`POST https://solvi.ag/api/v1/projects`
 
 ### Parameters
 
@@ -268,7 +268,7 @@ webhook_secret | optional | A token to use to sign webhook requests, see [webhoo
 curl -X POST
   -H "Authorization: Bearer <user-jwt-token>"
   -H "Content-Type: application/json"
-  "https://solvi.nu/api/v1/projects/<project_id>/begin_upload"
+  "https://solvi.ag/api/v1/projects/<project_id>/begin_upload"
 ```
 
 > Example response:
@@ -312,7 +312,7 @@ The required parameters are included in the `upload_imagery_data` object: this o
 
 ### HTTP Request
 
-`POST https://solvi.nu/api/v1/projects/<project_id>/begin_upload`
+`POST https://solvi.ag/api/v1/projects/<project_id>/begin_upload`
 
 ### Parameters
 
@@ -325,7 +325,7 @@ None.
 ```shell
 curl -X GET
   -H "Authorization: Bearer <user-jwt-token>"
-  'https://solvi.nu/api/v1/projects?field_geom={"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}'
+  'https://solvi.ag/api/v1/projects?field_geom={"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]}]}'
 ```
 
 > Example response:
@@ -347,12 +347,12 @@ curl -X GET
         },
         "survey_date": "2018-06-25T19:19:27.000Z",
         "upload_date": "2018-06-25T20:50:14.870Z",
-        "url": "https://solvi.nu/projects/9999",
-        "thumbnail_url": "https://solvi.nu/projects/9999/thumbnail.png"
+        "url": "https://solvi.ag/projects/9999",
+        "thumbnail_url": "https://solvi.ag/projects/9999/thumbnail.png"
     },
     {
       "name": "New project",
-      "url": "https://solvi.nu/projects/new"
+      "url": "https://solvi.ag/projects/new"
     }
   ]
 ```
@@ -361,7 +361,7 @@ This endpoint retrieves all projects created by the user or shared with user by 
 
 ### HTTP Request
 
-`GET https://solvi.nu/api/v1/projects/<project_id>`
+`GET https://solvi.ag/api/v1/projects/<project_id>`
 
 ### Parameters
 
@@ -376,7 +376,7 @@ field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format]
 ```shell
 curl -X GET
   -H "Authorization: Bearer <user-jwt-token>"
-  'https://solvi.nu/api/v1/projects/<project-id>
+  'https://solvi.ag/api/v1/projects/<project-id>
 ```
 
 > Example response:
@@ -397,10 +397,10 @@ curl -X GET
       },
       "survey_date": "2018-06-25T19:19:27.000Z",
       "upload_date": "2018-06-25T20:50:14.870Z",
-      "url": "https://solvi.nu/projects/9999",
-      "thumbnail_url": "https://solvi.nu/projects/9999/thumbnail.png",
+      "url": "https://solvi.ag/projects/9999",
+      "thumbnail_url": "https://solvi.ag/projects/9999/thumbnail.png",
       "resources": {
-        "thumbnail": "http://solvi.nu/projects/9999/thumbnail.png",
+        "thumbnail": "https://solvi.nu/projects/9999/thumbnail.png",
         "ortho": "https://solvi-projects.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/ortho.tiff?...",
         "dem": "https://solvi-projects-dev.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/dem.tiff?..."
       },
@@ -419,7 +419,7 @@ The response also include URL templates for tiled maps in the `tiles` section: t
 
 ### HTTP Request
 
-`GET https://solvi.nu/api/v1/projects/<project_id>`
+`GET https://solvi.ag/api/v1/projects/<project_id>`
 
 ### Parameters
 
