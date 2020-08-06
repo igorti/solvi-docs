@@ -243,6 +243,8 @@ Projects can be connected to a Field. When multiple projects are related to the 
 
 Fields can be created either beforehand - then `field_id` parameter should be specified when creating a project, or on the fly by sending in `field_name` and `field_geom`.
 
+Optionally, a project can be created with a so called *webhook* that will be called every time the status of the project changes. This makes it possible for an integration to for example react when a project finishes processing, without having to use polling to check the project's status. To add a webhook, specify the URL to be called with the `status_webhook` parameter. See the section on [webhooks](#webhooks) for details.
+
 ### HTTP Request
 
 `POST https://solvi.nu/api/v1/projects`
@@ -255,6 +257,8 @@ type      | optional  | The type of imagery for this project: `overlapping` or `
 field_id | | Unique field identifier
 field_name | optional | Name of the the field
 field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat)
+status_webhook | optional | A URL to be called when the project's status changes
+webhook_secret | optional | A token to use to sign webhook requests, see [webhooks](#webhooks) for details
 
 ## Upload project imagery
 
@@ -368,3 +372,34 @@ field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format]
 ## Project outputs
 
 There are several webhooks in Solvi that allow user generated outputs, like prescription files, to be exported or even posted back to partner API if it's available. This is handled on per case basis at the moment, [contact us](mailto:support@solvi.nu) for more details.
+
+## Webhooks
+
+Webhooks allows to set up integrations which subscribe to certain events from Solvi. When one of those events is triggered, a HTTP POST payload is sent to the webhook's configured URL. Currently, project status is the only available webhook in Solvi.
+
+> Example webhook request payload
+
+```json
+{
+  "project_id": 8993,
+  "event_type": "status_changed",
+  "old_status": "created",
+  "new_status": "uploading"
+}
+```
+
+The webhook is configured when [creating a project](#create-project) by specifing the `status_webhook` parameter, which should contain the URL of the webhook.
+
+### Securing webhooks
+
+To ensure that Solvi is the sender of the webhook requests, you can optionally also specify a secret token when registering the webhook, by using the `webhook_secret` parameter: the secret can be any string of your choosing.
+
+> Example signature header
+
+```
+X-Solvi-Signature: sha1=494e5dbdd1afbe4d44091bf86872b5eb4b9133e5
+```
+
+When a secret token has been specified, Solvi will include the HTTP header `X-Solvi-Signature`, which will contain a HMAC-SHA1 signature of the body.
+
+This follows the same pattern as [securing webhooks on GitHub](https://docs.github.com/en/developers/webhooks-and-events/securing-your-webhooks), except for using the header `X-Solvi-Signature` instead.
