@@ -316,7 +316,40 @@ The required parameters are included in the `upload_imagery_data` object: this o
 
 ### Parameters
 
-None.
+Parameter |  | Description
+--------- | ------- | -----------
+project_id | required | Project ID given when project is created
+
+## Processing uploaded imagery
+
+> Example request:
+
+```shell
+curl -X POST
+  -H "Authorization: Bearer <user-jwt-token>"
+  -H "Content-Type: application/json"
+  "https://solvi.ag/api/v1/projects/<project_id>/complete_upload"
+```
+
+> Example response:
+
+```json
+{
+  "status": "ok",
+}
+```
+
+When project imagery has been uploaded, the upload must be completed, which will start processing of the imagery.
+
+### HTTP Request
+
+`POST https://solvi.ag/api/v1/projects/<project_id>/complete_upload`
+
+### Parameters
+
+Parameter |  | Description
+--------- | ------- | -----------
+project_id | required | Project ID given when project is created
 
 ## Get projects
 
