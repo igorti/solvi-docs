@@ -400,7 +400,7 @@ curl -X GET
       "url": "https://solvi.ag/projects/9999",
       "thumbnail_url": "https://solvi.ag/projects/9999/thumbnail.png",
       "resources": {
-        "thumbnail": "https://solvi.nu/projects/9999/thumbnail.png",
+        "thumbnail": "https://solvi.ag/projects/9999/thumbnail.png",
         "ortho": "https://solvi-projects.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/ortho.tiff?...",
         "dem": "https://solvi-projects-dev.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/dem.tiff?..."
       },
