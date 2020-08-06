@@ -621,7 +621,7 @@ imagery for the project.</p>
         </span><span class="s2">"survey_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T19:19:27.000Z"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"upload_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T20:50:14.870Z"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://solvi.nu/projects/9999/thumbnail.png"</span><span class="w">
+        </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999/thumbnail.png"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New project"</span><span class="p">,</span><span class="w">
@@ -631,7 +631,7 @@ imagery for the project.</p>
 </span></code></pre>
 <p>This endpoint retrieves all projects created by the user or shared with user by others. If field boundaries are provided, only projects whose extent overlaps boundaries are returned.</p>
 <h3 id='http-request-7'>HTTP Request</h3>
-<p><code>GET https://solvi.nu/api/v1/projects</code></p>
+<p><code>GET https://solvi.nu/api/v1/projects/&lt;project_id&gt;</code></p>
 <h3 id='parameters-6'>Parameters</h3>
 <table><thead>
 <tr>
@@ -647,7 +647,65 @@ imagery for the project.</p>
 </tr>
 </tbody></table>
 <h2 id='project-outputs'>Project outputs</h2>
-<p>There are several webhooks in Solvi that allow user generated outputs, like prescription files, to be exported or even posted back to partner API if it&#39;s available. This is handled on per case basis at the moment, <a href="mailto:support@solvi.nu">contact us</a> for more details.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X GET
+  -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
+  <span class="s1">'https://solvi.nu/api/v1/projects/&lt;project-id&gt;
+</span></code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processed"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25-JUN-2018"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"field"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Winter Wheat"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"identfier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WW-01"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"farm"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">656</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Borgeby Farm"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"survey_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T19:19:27.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"upload_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-25T20:50:14.870Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi.nu/projects/9999/thumbnail.png"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"thumbnail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://solvi.nu/projects/9999/thumbnail.png"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ortho"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi-projects.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/ortho.tiff?..."</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://solvi-projects-dev.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/dem.tiff?..."</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"tiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"ortho"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://ts1.solvi.nu/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/ortho_rgb/{z}/{x}/{y}.png?token=..."</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://ts1.solvi.nu/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/dem_color/{z}/{x}/{y}.png?token=..."</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a projects created by the user or shared with user by others.</p>
+
+<p>The included <code>resources</code> are URLs that can be used to fetch the projects outputs. These resource URLs are temporary, with a lifetime of 15 minutes before they expire.</p>
+
+<p>The response also include URL templates for tiled maps in the <code>tiles</code> section: these URLs can be used directly with several popular map clients like <a href="https://openlayers.org/">OpenLayers</a> or <a href="https://leafletjs.com/">Leaflet</a>. The URLs are temporary, with a lifetime of at least 48 hours.</p>
+<h3 id='http-request-8'>HTTP Request</h3>
+<p><code>GET https://solvi.nu/api/v1/projects/&lt;project_id&gt;</code></p>
+<h3 id='parameters-7'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>project_id</td>
+<td>required</td>
+<td>Project ID given when project is created</td>
+</tr>
+</tbody></table>
 <h2 id='webhooks'>Webhooks</h2>
 <p>Webhooks allows to set up integrations which subscribe to certain events from Solvi. When one of those events is triggered, a HTTP POST payload is sent to the webhook&#39;s configured URL. Currently, project status is the only available webhook in Solvi.</p>
 
