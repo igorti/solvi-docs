@@ -348,7 +348,7 @@ curl -X GET
         "survey_date": "2018-06-25T19:19:27.000Z",
         "upload_date": "2018-06-25T20:50:14.870Z",
         "url": "https://solvi.nu/projects/9999",
-        "thumbnail_url": "http://solvi.nu/projects/9999/thumbnail.png"
+        "thumbnail_url": "https://solvi.nu/projects/9999/thumbnail.png"
     },
     {
       "name": "New project",
@@ -361,7 +361,7 @@ This endpoint retrieves all projects created by the user or shared with user by 
 
 ### HTTP Request
 
-`GET https://solvi.nu/api/v1/projects`
+`GET https://solvi.nu/api/v1/projects/<project_id>`
 
 ### Parameters
 
@@ -371,7 +371,61 @@ field_geom | optional | Boundaries of the field as a polygon in [GeoJSON format]
 
 ## Project outputs
 
-There are several webhooks in Solvi that allow user generated outputs, like prescription files, to be exported or even posted back to partner API if it's available. This is handled on per case basis at the moment, [contact us](mailto:support@solvi.nu) for more details.
+> Example request:
+
+```shell
+curl -X GET
+  -H "Authorization: Bearer <user-jwt-token>"
+  'https://solvi.nu/api/v1/projects/<project-id>
+```
+
+> Example response:
+
+```json
+  {
+      "project_id": 9999,
+      "status": "processed",
+      "name": "25-JUN-2018",
+      "field": {
+          "id": 9999,
+          "name": "Winter Wheat",
+          "identfier": "WW-01",
+          "farm": {
+              "id": 656,
+              "name": "Borgeby Farm"
+          }
+      },
+      "survey_date": "2018-06-25T19:19:27.000Z",
+      "upload_date": "2018-06-25T20:50:14.870Z",
+      "url": "https://solvi.nu/projects/9999",
+      "thumbnail_url": "https://solvi.nu/projects/9999/thumbnail.png",
+      "resources": {
+        "thumbnail": "http://solvi.nu/projects/9999/thumbnail.png",
+        "ortho": "https://solvi-projects.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/ortho.tiff?...",
+        "dem": "https://solvi-projects-dev.s3.eu-west-1.amazonaws.com/uploads/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/results/dem.tiff?..."
+      },
+      "tiles": {
+        "ortho": "https://ts1.solvi.nu/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/ortho_rgb/{z}/{x}/{y}.png?token=...",
+        "dem": "https://ts1.solvi.nu/ed12e5f6-b6c9-4df8-9522-1dbc29be854b/dem_color/{z}/{x}/{y}.png?token=..."
+      }
+  },
+```
+
+This endpoint retrieves a projects created by the user or shared with user by others.
+
+The included `resources` are URLs that can be used to fetch the projects outputs. These resource URLs are temporary, with a lifetime of 15 minutes before they expire.
+
+The response also include URL templates for tiled maps in the `tiles` section: these URLs can be used directly with several popular map clients like [OpenLayers](https://openlayers.org/) or [Leaflet](https://leafletjs.com/). The URLs are temporary, with a lifetime of at least 48 hours.
+
+### HTTP Request
+
+`GET https://solvi.nu/api/v1/projects/<project_id>`
+
+### Parameters
+
+Parameter |  | Description
+--------- | ------- | -----------
+project_id | required | Project ID given when project is created
 
 ## Webhooks
 
