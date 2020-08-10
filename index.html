@@ -273,7 +273,7 @@
         <h1 id='introduction'>Introduction</h1>
 <p>Solvi API is organized around REST and allows for programmatic access to resources like users and projects. Below you will find detailed information on how to access the API and which operations are currently supported.</p>
 
-<p>In Solvi, a Project represents a single upload of multiple images. Projects can be grouped under Fields, which in turn are grouped into Farms to make it easier to organize and share data. Current API implementation allows to create and fetch projects for specific user. It is assumed that user is redirected to Solvi in order to upload, process and analyze the imagery.</p>
+<p>In Solvi, a Project represents a single upload of multiple images. Projects can be grouped under Fields, which in turn are grouped into Farms to make it easier to organize and share data. Current API implementation allows to create and fetch projects for the specific user, as well as upload and stitch images into maps. Once processed, the outputs such as orthomosaics and elevation maps can either be accessed through the API or the user can be redirected to Solvi to view and analyze the processed imagery.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>Example API key request:</p>
@@ -288,16 +288,16 @@
 <p>To use Solvi API you first need an <em>API key</em>. You will get an API key from Solvi, <a href="mailto:support@solvi.nu">contact us</a> to get your key. If you for some
 reason need to revoke a key, you can also contact us.</p>
 
-<p>Please note that the API key should be kept secret and not be exposed to end users: for example, never send the API key to a web browser.</p>
+<p>Please note that the API key should be kept secret and not be exposed to end-users: for example, never send the API key to a web browser.</p>
 
-<p>With the API key, you can access general API methods, for example to <a href="#register-new-user">register new users</a> in Solvi, and create user specific tokens.</p>
+<p>With the API key, you can access general API methods, for example, to <a href="#register-new-user">register new users</a> in Solvi, and create user-specific tokens.</p>
 
 <p>Requests requiring an API key should add the <code>X-Api-Key</code> header:</p>
 
 <p><code>X-Api-Key: &lt;your-api-key&gt;</code></p>
 
 <blockquote>
-<p>Example user specific request:</p>
+<p>Example user-specific request:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"api_endpoint_here"</span>
   -H <span class="s2">"Authorization: Bearer &lt;user-specific-token&gt;"</span>
@@ -306,7 +306,7 @@ reason need to revoke a key, you can also contact us.</p>
 <p>Make sure to replace <code>&lt;user-specific-token&gt;</code> with your token.</p>
 </blockquote>
 
-<p>All user-specific requests, like creating or getting projects, should use a user specific token, which has a limited lifetime and can therefor be used directly from a browser, or for passwordless authentication when user is redirected from your portal to Solvi. A user specific token can be used for a limited amount of time (currently 24 hours) before it expires. A user specific token is created by using the <a href="#generate-user-specific-token">endpoint to create user-specific token</a>.</p>
+<p>All user-specific requests, like creating or getting projects, should use a user-specific token, which has a limited lifetime and can therefore, be used directly from a browser, or for passwordless authentication when the user is redirected from your portal to Solvi. A user-specific token can be used for a limited amount of time (currently 24 hours) before it expires. A user-specific token is created by using the <a href="#generate-user-specific-token">endpoint to create a user-specific token</a>.</p>
 
 <p>User specific requests should use the <code>Authorization</code> header <em>instead of</em> the <code>X-Api-Key</code> header:</p>
 
@@ -329,7 +329,7 @@ reason need to revoke a key, you can also contact us.</p>
     </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">182</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint registers new user. If successful, the response will return <code>user_id</code> that you would use later to generate user-specific tokens</p>
+<p>This endpoint registers a new user. If successful, the response will return <code>user_id</code> that you would use later to generate user-specific tokens.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/users</code></p>
 <h3 id='parameters'>Parameters</h3>
@@ -363,7 +363,7 @@ reason need to revoke a key, you can also contact us.</p>
 </tbody></table>
 
 <aside>
-Parameters above must be wrapped into `user` attribute and sent as JSON payload in POST request, see example.
+Parameters above must be wrapped into `user` attribute and sent as JSON payload in POST request, see the example.
 </aside>
 <h2 id='generate-user-specific-token'>Generate user-specific token</h2>
 <blockquote>
@@ -382,7 +382,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjo0OCwiZXhwIjoxNTAxMjU2NzAyfQ.cu5zIye7ubBhv7YsFIxXkO0E_W0hG0VrlOTQx6L3b3c"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint gives a token for specific user that should be used to create and retrieve user projects. Every request will generate new token. Token is valid for 24 hours.</p>
+<p>This endpoint gives a token for the specific user that should be used to create and retrieve user projects. Every request will generate na ew token. The token is valid for 24 hours.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/users/&lt;user_id&gt;/token</code></p>
 <h3 id='parameters-2'>Parameters</h3>
@@ -417,7 +417,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="s2">"field_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">793</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Creates new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The response contains <code>field_id</code> which can be later used to relate projects to specific field.</p>
+<p>Creates a new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The response contains <code>field_id</code> which can be later used to relate projects to the specific field.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/fields</code></p>
 <h3 id='parameters-3'>Parameters</h3>
@@ -499,13 +499,13 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint creates a new project which is required prior to imagery upload. In response you will receive url to upload page for newly created project where user can be redirected.</p>
+<p>This endpoint creates a new project which is required before imagery upload. In response, you will receive URL to upload-page for the newly created project where the user can be redirected.</p>
 
 <p>Projects can be connected to a Field. When multiple projects are related to the same Field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same Field and over the time data comparison.</p>
 
 <p>Fields can be created either beforehand - then <code>field_id</code> parameter should be specified when creating a project, or on the fly by sending in <code>field_name</code> and <code>field_geom</code>.</p>
 
-<p>Optionally, a project can be created with a so called <em>webhook</em> that will be called every time the status of the project changes. This makes it possible for an integration to for example react when a project finishes processing, without having to use polling to check the project&#39;s status. To add a webhook, specify the URL to be called with the <code>status_webhook</code> parameter. See the section on <a href="#webhooks">webhooks</a> for details.</p>
+<p>Optionally, a project can be created with a so-called <em>webhook</em> that will be called every time the status of the project changes. This makes it possible for integration to for example react when a project finishes processing, without having to use polling to check the project&#39;s status. To add a webhook, specify the URL to be called with the <code>status_webhook</code> parameter. See the section on <a href="#webhooks">webhooks</a> for details.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/projects</code></p>
 <h3 id='parameters-4'>Parameters</h3>
@@ -591,7 +591,7 @@ imagery for the project.</p>
     <span class="k">return</span> <span class="nx">fetch</span><span class="p">(</span><span class="nx">postInfo</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span> <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="nx">form</span> <span class="p">})</span>
   <span class="p">}</span>
 </code></pre>
-<p>The required parameters are included in the <code>upload_imagery_data</code> object: this object has a <code>url</code> property indicating the URL to POST imagery to, and a <code>fields</code> object, listing the HTTP form data fields required for the POST request. In addition to these fields, the form must also include a <code>key</code> field: the key is the must include a value prefixed by the <code>key_prefix</code> and a value unique for each image (like its filename).</p>
+<p>The required parameters are included in the <code>upload_imagery_data</code> object: this object has a <code>url</code> property indicating the URL to POST imagery to, and a <code>fields</code> object, listing the HTTP form data fields required for the POST request. In addition to these fields, the form must also include a <code>key</code> field: the key is the must include a value prefixed by the <code>key_prefix</code> and value unique for each image (like its filename).</p>
 <h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/projects/&lt;project_id&gt;/begin_upload</code></p>
 <h3 id='parameters-5'>Parameters</h3>
@@ -624,7 +624,7 @@ imagery for the project.</p>
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>When project imagery has been uploaded, the upload must be completed, which will start processing of the imagery.</p>
+<p>When project imagery has been uploaded, the upload must be completed, which will start the processing of the imagery.</p>
 <h3 id='http-request-7'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/projects/&lt;project_id&gt;/complete_upload</code></p>
 <h3 id='parameters-6'>Parameters</h3>
@@ -679,7 +679,7 @@ imagery for the project.</p>
 </span></code></pre>
 <p>This endpoint retrieves all projects created by the user or shared with user by others. If field boundaries are provided, only projects whose extent overlaps boundaries are returned.</p>
 <h3 id='http-request-8'>HTTP Request</h3>
-<p><code>GET https://solvi.ag/api/v1/projects/&lt;project_id&gt;</code></p>
+<p><code>GET https://solvi.ag/api/v1/projects</code></p>
 <h3 id='parameters-7'>Parameters</h3>
 <table><thead>
 <tr>
@@ -733,11 +733,11 @@ imagery for the project.</p>
       </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a projects created by the user or shared with user by others.</p>
+<p>This endpoint retrieves projects created by the user or shared with the user by others.</p>
 
-<p>The included <code>resources</code> are URLs that can be used to fetch the projects outputs. These resource URLs are temporary, with a lifetime of 15 minutes before they expire.</p>
+<p>The included <code>resources</code> are URLs that can be used to fetch the project outputs. These resource URLs are temporary, with a lifetime of 15 minutes before they expire.</p>
 
-<p>The response also include URL templates for tiled maps in the <code>tiles</code> section: these URLs can be used directly with several popular map clients like <a href="https://openlayers.org/">OpenLayers</a> or <a href="https://leafletjs.com/">Leaflet</a>. The URLs are temporary, with a lifetime of at least 48 hours.</p>
+<p>The response also includes URL templates for tiled maps in the <code>tiles</code> section: these URLs can be used directly with several popular map clients like <a href="https://openlayers.org/">OpenLayers</a> or <a href="https://leafletjs.com/">Leaflet</a>. The URLs are temporary, with a lifetime of at least 48 hours.</p>
 <h3 id='http-request-9'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/projects/&lt;project_id&gt;</code></p>
 <h3 id='parameters-8'>Parameters</h3>
@@ -755,7 +755,7 @@ imagery for the project.</p>
 </tr>
 </tbody></table>
 <h2 id='webhooks'>Webhooks</h2>
-<p>Webhooks allows to set up integrations which subscribe to certain events from Solvi. When one of those events is triggered, a HTTP POST payload is sent to the webhook&#39;s configured URL. Currently, project status is the only available webhook in Solvi.</p>
+<p>Webhooks allow setting up integrations that subscribe to certain events from Solvi. When one of those events is triggered, an HTTP POST payload is sent to the webhook&#39;s configured URL. Currently, project status is the only available webhook in Solvi.</p>
 
 <blockquote>
 <p>Example webhook request payload</p>
@@ -776,7 +776,7 @@ imagery for the project.</p>
 </blockquote>
 <pre class="highlight plaintext"><code>X-Solvi-Signature: sha1=494e5dbdd1afbe4d44091bf86872b5eb4b9133e5
 </code></pre>
-<p>When a secret token has been specified, Solvi will include the HTTP header <code>X-Solvi-Signature</code>, which will contain a HMAC-SHA1 signature of the body.</p>
+<p>When a secret token has been specified, Solvi will include the HTTP header <code>X-Solvi-Signature</code>, which will contain an HMAC-SHA1 signature of the body.</p>
 
 <p>This follows the same pattern as <a href="https://docs.github.com/en/developers/webhooks-and-events/securing-your-webhooks">securing webhooks on GitHub</a>, except for using the header <code>X-Solvi-Signature</code> instead.</p>
 
