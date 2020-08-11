@@ -128,6 +128,44 @@ Parameter |  | Description
 --------- | ------- | -----------
 user_id | required | User ID given when user is created
 
+# Farms
+
+## Get farms
+
+> Example request:
+
+```shell
+curl -X GET
+  -H "Authorization: Bearer <user-jwt-token>"
+  -H "Content-Type: application/json"
+  "https://solvi.ag/api/v1/farms"
+```
+
+> Example response:
+
+```json
+    [
+      {
+        "name": "My farm",
+        "created_at": "2019-02-08T09:18:37.655Z",
+        "fields": [
+          {
+            "id": 2657,
+            "name": "Veddige",
+            "created_at": "2019-03-08T04:05:38.628Z"
+          }
+        ]
+      }
+    ]
+```
+
+Gets all user farms and a list of fields related to each farm.
+
+### HTTP Request
+
+`GET https://solvi.ag/api/v1/fields`
+
+
 # Fields
 
 ## Create field
