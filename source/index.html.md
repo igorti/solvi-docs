@@ -189,7 +189,7 @@ curl -X POST
   }
 ```
 
-Creates a new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The response contains `field_id` which can be later used to relate projects to the specific field.
+Creates a new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The farm to organize the field under can also be provided. The response contains `field_id` which can be later used to relate projects to the specific field.
 
 ### HTTP Request
 
@@ -201,6 +201,7 @@ Parameter | | Description
 --------- | ----------- | -----------
 name | | Name of the the field
 geom | optional | Boundaries of the field as a Polygon or Multipolygon in [GeoJSON format](https://geojson.org/geojson-spec.html#introduction) and EPSG:4326 coordinate system(lonlat)
+farm_id | optional | The id of the farm to put the field under; if not specified, the user's last created farm is used
 
 
 ## Get fields
