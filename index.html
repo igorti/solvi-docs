@@ -235,6 +235,9 @@
             <a href="#farms" class="toc-h1 toc-link" data-title="Farms">Farms</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#create-farm" class="toc-h2 toc-link" data-title="Farms">Create farm</a>
+                  </li>
+                  <li>
                     <a href="#get-farms" class="toc-h2 toc-link" data-title="Farms">Get farms</a>
                   </li>
               </ul>
@@ -407,7 +410,42 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <td>User ID given when user is created</td>
 </tr>
 </tbody></table>
-<h1 id='farms'>Farms</h1><h2 id='get-farms'>Get farms</h2>
+<h1 id='farms'>Farms</h1><h2 id='create-farm'>Create farm</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  -H <span class="s2">"Authorization: Bearer &lt;user-jwt-token&gt;"</span>
+  -H <span class="s2">"Content-Type: application/json"</span>
+  -d <span class="s1">'{"farm": {"name": "My second farm"}}'</span>
+  <span class="s2">"https://solvi.ag/api/v1/farms"</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"farm_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">793</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Creates a new farm.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://solvi.ag/api/v1/farms</code></p>
+<h3 id='parameters-3'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td></td>
+<td>Name of the the farm</td>
+</tr>
+</tbody></table>
+<h2 id='get-farms'>Get farms</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -434,7 +472,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Gets all user farms and a list of fields related to each farm.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
+<h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/fields</code></p>
 <h1 id='fields'>Fields</h1><h2 id='create-field'>Create field</h2>
 <blockquote>
@@ -455,9 +493,9 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Creates a new field. Field boundaries can be provided as Polygon or MultiPolygon in GeoJSON format. The farm to organize the field under can also be provided. The response contains <code>field_id</code> which can be later used to relate projects to the specific field.</p>
-<h3 id='http-request-4'>HTTP Request</h3>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/fields</code></p>
-<h3 id='parameters-3'>Parameters</h3>
+<h3 id='parameters-4'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -513,7 +551,7 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
     </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>Gets all user fields and a list of projects related to each field.</p>
-<h3 id='http-request-5'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/fields</code></p>
 <h1 id='projects'>Projects</h1><h2 id='create-project'>Create project</h2>
 <blockquote>
@@ -548,9 +586,9 @@ Parameters above must be wrapped into `user` attribute and sent as JSON payload 
 <p>Fields can be created either beforehand - then <code>field_id</code> parameter should be specified when creating a project, or on the fly by sending in <code>field_name</code> and <code>field_geom</code>.</p>
 
 <p>Optionally, a project can be created with a so-called <em>webhook</em> that will be called every time the status of the project changes. This makes it possible for integration to for example react when a project finishes processing, without having to use polling to check the project&#39;s status. To add a webhook, specify the URL to be called with the <code>status_webhook</code> parameter. See the section on <a href="#webhooks">webhooks</a> for details.</p>
-<h3 id='http-request-6'>HTTP Request</h3>
+<h3 id='http-request-7'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/projects</code></p>
-<h3 id='parameters-4'>Parameters</h3>
+<h3 id='parameters-5'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -634,9 +672,9 @@ imagery for the project.</p>
   <span class="p">}</span>
 </code></pre>
 <p>The required parameters are included in the <code>upload_imagery_data</code> object: this object has a <code>url</code> property indicating the URL to POST imagery to, and a <code>fields</code> object, listing the HTTP form data fields required for the POST request. In addition to these fields, the form must also include a <code>key</code> field: the key is the must include a value prefixed by the <code>key_prefix</code> and value unique for each image (like its filename).</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-8'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/projects/&lt;project_id&gt;/begin_upload</code></p>
-<h3 id='parameters-5'>Parameters</h3>
+<h3 id='parameters-6'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -667,9 +705,9 @@ imagery for the project.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>When project imagery has been uploaded, the upload must be completed, which will start the processing of the imagery.</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>POST https://solvi.ag/api/v1/projects/&lt;project_id&gt;/complete_upload</code></p>
-<h3 id='parameters-6'>Parameters</h3>
+<h3 id='parameters-7'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -720,9 +758,9 @@ imagery for the project.</p>
   </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all projects created by the user or shared with user by others. If field boundaries are provided, only projects whose extent overlaps boundaries are returned.</p>
-<h3 id='http-request-9'>HTTP Request</h3>
+<h3 id='http-request-10'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/projects</code></p>
-<h3 id='parameters-7'>Parameters</h3>
+<h3 id='parameters-8'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -780,9 +818,9 @@ imagery for the project.</p>
 <p>The included <code>resources</code> are URLs that can be used to fetch the project outputs. These resource URLs are temporary, with a lifetime of 15 minutes before they expire.</p>
 
 <p>The response also includes URL templates for tiled maps in the <code>tiles</code> section: these URLs can be used directly with several popular map clients like <a href="https://openlayers.org/">OpenLayers</a> or <a href="https://leafletjs.com/">Leaflet</a>. The URLs are temporary, with a lifetime of at least 48 hours.</p>
-<h3 id='http-request-10'>HTTP Request</h3>
+<h3 id='http-request-11'>HTTP Request</h3>
 <p><code>GET https://solvi.ag/api/v1/projects/&lt;project_id&gt;</code></p>
-<h3 id='parameters-8'>Parameters</h3>
+<h3 id='parameters-9'>Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
