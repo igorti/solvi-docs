@@ -130,6 +130,39 @@ user_id | required | User ID given when user is created
 
 # Farms
 
+## Create farm
+
+> Example request:
+
+```shell
+curl -X POST
+  -H "Authorization: Bearer <user-jwt-token>"
+  -H "Content-Type: application/json"
+  -d '{"farm": {"name": "My second farm"}}'
+  "https://solvi.ag/api/v1/farms"
+```
+
+> Example response:
+
+```json
+  {
+    "status": "success",
+    "farm_id": 793
+  }
+```
+
+Creates a new farm.
+
+### HTTP Request
+
+`POST https://solvi.ag/api/v1/farms`
+
+### Parameters
+
+Parameter | | Description
+--------- | ----------- | -----------
+name | | Name of the the farm
+
 ## Get farms
 
 > Example request:
