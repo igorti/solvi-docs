@@ -311,6 +311,11 @@ curl -X POST
 
 This endpoint creates a new project which is required before imagery upload. In response, you will receive URL to upload-page for the newly created project where the user can be redirected.
 
+There are multiple *types* of projects: `overlapping` (the default) and `stitched`:
+
+* `overlapping` should be used if you have a number of photos taken which should be stitched into a map by Solvi; this is the default and what you normally use
+* `stitched` can be used if you already have a single [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) that have been stitched by another system
+
 Projects can be connected to a Field. When multiple projects are related to the same Field, they appear in the same map view when data is processed. This allows for easier navigation between imagery over the same Field and over the time data comparison.
 
 Fields can be created either beforehand - then `field_id` parameter should be specified when creating a project, or on the fly by sending in `field_name` and `field_geom`.
