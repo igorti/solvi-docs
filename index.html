@@ -317,7 +317,7 @@ reason need to revoke a key, you can also contact us.</p>
 <p>Make sure to replace <code>&lt;user-specific-token&gt;</code> with your token.</p>
 </blockquote>
 
-<p>All user-specific requests, like creating or getting projects, should use a user-specific token, which has a limited lifetime and can therefore, be used directly from a browser, or for passwordless authentication when the user is redirected from your portal to Solvi. A user-specific token can be used for a limited amount of time (currently 24 hours) before it expires. A user-specific token is created by using the <a href="#generate-user-specific-token">endpoint to create a user-specific token</a>.</p>
+<p>All user-specific requests, like creating or getting projects, should use a user-specific token. When using a user-specific token, <em>do not</em> include the API in the same request. A use-specific token has a limited lifetime and can therefore be used directly from a browser, or for passwordless authentication when the user is redirected from your portal to Solvi. A user-specific token can be used for a limited amount of time (currently 24 hours) before it expires. A user-specific token is created by using the <a href="#generate-user-specific-token">endpoint to create a user-specific token</a>.</p>
 
 <p>User specific requests should use the <code>Authorization</code> header <em>instead of</em> the <code>X-Api-Key</code> header:</p>
 
